@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import {
   Container, Header, Contente, Main, NewPoint,
   IconNewPoint, Title, SearchPoint, IconSearchPoint,
-  SearchPoints, ContainerOut, ContainerSearchPoints, Form, Input, ButtonSubmit, ContainerInput, Item
+  SearchPoints, ContainerOut, ContainerSearchPoints, Form,
+  Input, ButtonSubmit, ContainerInput, Item, ContainerItems
 } from './styles';
 import logo from '../../assets/logo.svg'
 import { schema, fields } from './data'
@@ -24,20 +25,19 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState<any>([[], []]);
   const [fieldInput, setFieldInput] = useState([{ value: '', change: false }, { value: '', change: false }]);
   function handleSubmit({ uf, city }: any, { resetForm }: any) {
-    history.push('/detailPoints', { uf, city });
-    resetForm();
+    if (fieldInput[0].change && fieldInput[1].change) {
+      history.push('/detailPoints', { uf, city });
+      resetForm();
+    }
+
   }
   useEffect(() => {
-    console.log(fieldInput);
-
   }, [fieldInput])
   useEffect(() => {
     axios.get<IBGEUFReponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then((response) => {
       const ufInitials = response.data.map(uf => { return uf.sigla });
       setSearchInput([ufInitials, searchInput[1]])
     })
-    console.log(searchInput, fieldInput);
-
   }, []);
   useEffect(() => {
     if (fieldInput[0].value !== "")
@@ -45,8 +45,6 @@ export default function Home() {
         const cityInitials = response.data.map(city => { return city.nome });
         setSearchInput([searchInput[0], cityInitials]);
       })
-    console.log(searchInput, fieldInput);
-
   }, [fieldInput[0]]);
   return (
     <Container>
@@ -64,12 +62,16 @@ export default function Home() {
                 placeholder={fields[0].placeHolder}
               />
               {(fieldInput[0].value !== "" && fieldInput[0].change === false)
-                && searchInput[0].map((value: string, indice: any) => {
-                  return (value.indexOf(fieldInput[0].value) === 0)
-                    && <Item key={indice} onClick={() => { setFieldInput([{ value, change: true }, fieldInput[1]]) }}>
-                      {fieldInput[0].value.toUpperCase()}<span>{value.slice(fieldInput[0].value.length, value.length)}</span></Item>
-                }
-                )}
+                &&
+                <ContainerItems>
+                  {searchInput[0].map((value: string, indice: any) => {
+                    return (value.indexOf(fieldInput[0].value) === 0)
+                      && <Item key={indice} onClick={() => { setFieldInput([{ value, change: true }, fieldInput[1]]) }}>
+                        {fieldInput[0].value.toUpperCase()}<span>{value.slice(fieldInput[0].value.length, value.length)}</span></Item>
+                  })}
+                  <div />
+                </ContainerItems>
+              }
             </ContainerInput>
             <ContainerInput >
               <Input
@@ -82,13 +84,18 @@ export default function Home() {
                 placeholder={fields[1].placeHolder}
               />
               {(fieldInput[1].value !== "" && fieldInput[1].change === false)
-                && searchInput[1].map((value: string, indice: any) => {
-                  return (value.toLowerCase().indexOf(fieldInput[1].value) === 0)
-                    && <Item key={indice} onClick={() => { setFieldInput([fieldInput[0], { value, change: true },]) }}>
-                      {fieldInput[1].value}<span>
-                        {value.toLowerCase().slice(fieldInput[1].value.length, value.length)}</span></Item>
-                }
-                )}
+                &&
+                <ContainerItems>
+                  {searchInput[1].map((value: string, indice: any) => {
+                    return (value.toLowerCase().indexOf(fieldInput[1].value) === 0)
+                      && <Item key={indice} onClick={() => { setFieldInput([fieldInput[0], { value, change: true },]) }}>
+                        {fieldInput[1].value}<span>
+                          {value.toLowerCase().slice(fieldInput[1].value.length, value.length)}</span></Item>
+
+                  })}
+                  <div />
+                </ContainerItems>
+              }
             </ContainerInput>
             <ButtonSubmit type="submit">Buscar</ButtonSubmit>
           </Form>

@@ -17,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export const TitleCard = styled.h2`
-  height: 30px;
+  height: 40px;
   margin: 20px 0px;
   font-size: 28px;
   text-overflow: ellipsis;
@@ -46,10 +46,11 @@ export const AddressCard = styled.p`
   }
 `;
 export const Image = styled.div<{ image: string }>`
-  background-image: ${(props) => `url(${props.image})`};
+  background-image: ${(props) => `url('${props.image}')`};
   width: 100%;
   height: 200px;
   border-radius: 8px 8px 0px 0px;
+  background-size: cover;
 `;
 export const ContainerItems = styled.div`
   height: 70px;

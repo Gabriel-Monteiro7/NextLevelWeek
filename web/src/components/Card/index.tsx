@@ -30,7 +30,7 @@ export default function Card(props: any) {
     <Container>
       {
         point.items === null ? <Lottie options={defaultOptions} />
-          : <><Image image={point.image} />
+          : <><Image image={point.image_url} />
             <TitleCard>{point.name}</TitleCard>
             <ContainerItems>
               {point?.items.map((item: any, index: any) => {
@@ -38,7 +38,7 @@ export default function Card(props: any) {
               })}
             </ContainerItems>
             <ContainerAddress>
-              <AddressCard>{point.address?.city}, {point.address?.state}</AddressCard>
+              <AddressCard>{point.address?.city || point?.city}, {point.address?.state || point.uf}</AddressCard>
               <AddressCard>{point.address?.state_district} </AddressCard>
               <AddressCard> {point.address?.postcode}</AddressCard>
             </ContainerAddress>

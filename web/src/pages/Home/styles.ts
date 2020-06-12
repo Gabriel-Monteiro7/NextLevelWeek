@@ -136,8 +136,9 @@ export const SearchPoint = styled.button`
     background: #2fb86e;
   }
   @media (max-width: ${sm}px) {
-    width: 85%;
-    height: 40px;
+    width: 245px;
+    height: 50px;
+    font-size: 12px;
     position: relative;
   }
 `;
@@ -150,9 +151,9 @@ export const IconSearchPoint = styled(FiSearch)`
   border-radius: 8px 0px 0px 8px;
   margin-right: 35px;
   @media (max-width: ${sm}px) {
-    width: 40px;
-    padding: 0px 11px;
-    margin-right: 10px;
+    width: 50px;
+    padding: 0px 15px;
+    margin-right: 20px;
   }
 `;
 export const SearchPoints = styled.div`
@@ -202,11 +203,12 @@ export const Input = styled(InputRocket)`
   border: 0px;
   padding: 14px 10px;
   border-radius: 6px;
-  height: 50px;
+  height: 55px;
   color: #636363;
   background: #f0f0f5;
   margin: 5px 0px;
   width: 100%;
+  font-size: 16px;
 `;
 export const ButtonSubmit = styled.button`
   padding: 0;
@@ -231,17 +233,26 @@ export const ContainerInput = styled.div`
     margin-top: 5px;
     padding-left: 10px;
   }
+  max-height: 170px;
+  position: relative;
+`;
+export const ContainerItems = styled.ul`
   overflow: auto;
+  height: 100%;
+  margin-top: -10px;
   ::-webkit-scrollbar {
     width: 0px;
   }
-  max-height: 170px;
+  div {
+    height: 5px;
+  }
 `;
-export const Item = styled.div`
+export const Item = styled.li`
+  list-style: none;
   border: 0px;
   padding: 14px 10px;
   border-radius: 0px 0px 6px 6px;
-  height: 50px;
+  height: 55px;
   color: #a0a0b2;
   background: #f0f0f5;
   font-size: 14px;
@@ -249,6 +260,8 @@ export const Item = styled.div`
   margin: -9px 0px 5px;
   text-align: start;
   width: 100%;
+  align-items: center;
+  display: flex;
   cursor: pointer;
   &:hover {
     background: #eae9e9;

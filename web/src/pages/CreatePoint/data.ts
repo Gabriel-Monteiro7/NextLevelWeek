@@ -18,19 +18,19 @@ export const schema: any = Yup.object().shape({
 export const fields: any = [
   [
     {
-      placeHolder: "Digite o nome da entidade",
+      placeholder: "Digite o nome da entidade",
       label: "Nome da entidade *",
       name: "name",
       width: 100,
     },
     {
-      placeHolder: "Digite seu email",
+      placeholder: "Digite seu email",
       label: "Email *",
       name: "email",
       width: 50,
     },
     {
-      placeHolder: "Digite seu whatsapp",
+      placeholder: "Digite seu whatsapp",
       label: "Whatsapp *",
       name: "whatsapp",
       width: 48,
@@ -38,13 +38,13 @@ export const fields: any = [
   ],
   [
     {
-      placeHolder: "Digite o nome da rua",
+      placeholder: "Digite o nome da rua",
       label: "Rua",
       name: "road",
       width: 80,
     },
     {
-      placeHolder: "",
+      placeholder: "",
       label: "Número",
       name: "number",
       width: 16,
@@ -52,13 +52,13 @@ export const fields: any = [
       defaultValue: 0,
     },
     {
-      placeHolder: "Digite seu bairro",
+      placeholder: "Digite seu bairro",
       label: "Bairro",
       name: "district",
       width: 50,
     },
     {
-      placeHolder: "Digite um complemento",
+      placeholder: "Digite um complemento",
       label: "Complemento",
       name: "complment",
       width: 48,
@@ -66,13 +66,13 @@ export const fields: any = [
   ],
   [
     {
-      placeHolder: "Selecione UF",
+      placeholder: "Selecione UF",
       label: "Estado (UF) *",
       name: "uf",
       width: 50,
     },
     {
-      placeHolder: "Selecione Cidade",
+      placeholder: "Selecione Cidade",
       label: "Cidade *",
       name: "city",
       width: 48,

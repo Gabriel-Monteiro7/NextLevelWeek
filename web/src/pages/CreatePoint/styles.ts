@@ -112,7 +112,7 @@ export const Input = styled(InputRocket)`
   color: #636363;
   background: #f0f0f5;
   @media (max-width: ${sm}px) {
-    height: 35px;
+    height: 30px;
     font-size: 10px;
   }
 `;
@@ -124,7 +124,7 @@ export const Select = styled(SelectRocket)`
   color: #636363;
   background: #f0f0f5;
   @media (max-width: ${sm}px) {
-    height: 35px;
+    height: 30px;
     font-size: 10px;
   }
 `;
