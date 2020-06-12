@@ -2,12 +2,12 @@ import React, { useEffect, useState, Props } from 'react';
 import logo from '../../assets/logo.svg';
 import {
   Container,
-  GoBack, Header, IconGoBack, Main
+  GoBack, Header, IconGoBack, Main, NoPoints
 } from './styles';
 import Card from '../../components/Card'
 import api from '../../service/api';
 export default function DetailPoint({ history }: any) {
-  const [points, setPoints] = useState<any[]>([])
+  const [points, setPoints] = useState<any>([])
   useEffect(() => {
     if (history.location.state === undefined)
       return history.goBack();
@@ -27,7 +27,7 @@ export default function DetailPoint({ history }: any) {
       </Header>
       <Main>
         {
-          points.length === 0 ? <span></span> : points.map((point: any, index: any) => {
+          points.length === 0 ? <NoPoints>Não existe pontos cadastrados</NoPoints> : points.map((point: any, index: any) => {
             return <Card point={point} key={index} />
           })
         }

@@ -12,7 +12,7 @@ import history from '../../service/history'
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import api from '../../service/api';
 import axios from 'axios';
-
+import DropZone from '../../components/DropZone'
 interface Item {
   id: number;
   title: string;
@@ -24,6 +24,7 @@ interface IBGEUFReponse {
 interface IBGECityReponse {
   nome: string
 }
+
 export default function CreatePoint() {
   const [items, setItems] = useState<Item[]>([])
   const [ufs, setUfs] = useState<any[]>([]);
@@ -32,6 +33,8 @@ export default function CreatePoint() {
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
   const [selectedItem, setSelectedItem] = useState<number[]>([]);
   const [success, setSuccess] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File>();
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
@@ -59,10 +62,25 @@ export default function CreatePoint() {
 
   }, []);
   async function handleSubmit({ name, whatsapp, email, uf, city, road, number, district, }: any, { resetForm }: any) {
-    if (selectedItem.length > 0) {
+
+    if (selectedItem.length > 0 && selectedFile !== undefined) {
       const [latitude, longitude] = selectedPosition;
       const items = selectedItem;
-      await api.post('points', { name, whatsapp, email, uf, city, items, latitude, longitude, road, number, district, });
+      const data = new FormData();
+
+      data.append('name', name);
+      data.append('whatsapp', whatsapp);
+      data.append('email', email);
+      data.append('uf', uf);
+      data.append('city', city);
+      data.append('items', items.join(','));
+      data.append('latitude', String(latitude));
+      data.append('longitude', String(longitude));
+      data.append('road', road);
+      data.append('number', number);
+      data.append('district', district);
+      data.append('image', selectedFile)
+      await api.post('points', data);
       setSuccess(true);
       resetForm();
       toast.success("Ponto adicionado com sucesso");
@@ -88,6 +106,7 @@ export default function CreatePoint() {
     }
 
   }
+
   return (
     <Container>
       {success && <Success title={"Clique para voltar!"} onClick={() => {
@@ -99,8 +118,9 @@ export default function CreatePoint() {
           <Title>Cadastro do <br />ponto de coleta</Title>
           <Form schema={schema} onSubmit={handleSubmit}
             initialData={{ password: "", user: "" }} >
-            <  FlexBox><Label>Dados</Label></FlexBox>
+            <DropZone onFileUploaded={setSelectedFile} />
 
+            <  FlexBox><Label>Dados</Label></FlexBox>
             {fields[0].map((input: any, index: any) => {
               return <ContainerInput width={input.width} key={index}>
                 <Input
@@ -111,7 +131,7 @@ export default function CreatePoint() {
             <  FlexBox><Label>Endereços</Label> <span>Selecione o endereço no mapa</span></FlexBox>
 
             <ContainerMap>
-              <Map center={selectedPosition} zoom={50} onClick={(e: LeafletMouseEvent) => { setSelectedPosition([e.latlng.lat, e.latlng.lng]) }}>
+              <Map center={selectedPosition} zoom={30} onClick={(e: LeafletMouseEvent) => { setSelectedPosition([e.latlng.lat, e.latlng.lng]) }}>
                 <TileLayer
                   attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

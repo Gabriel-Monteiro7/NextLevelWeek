@@ -39,7 +39,7 @@ export const Header = styled.div`
     flex-direction: column;
     margin: 30px 0;
     p {
-      width: 90%;
+      text-align: center;
     }
   }
 `;
@@ -74,5 +74,17 @@ export const IconGoBack = styled(FiArrowLeft)`
   @media (max-width: ${sm}px) {
     font-size: 18px;
     margin-right: 5px;
+  }
+`;
+export const NoPoints = styled.span`
+  align-items: center;
+  font-size: 30px;
+  color: #989898;
+  display: flex;
+  height: 60vh;
+  margin: auto;
+  justify-content: center;
+  @media (max-width: ${sm}px) {
+    font-size: 17px;
   }
 `;
