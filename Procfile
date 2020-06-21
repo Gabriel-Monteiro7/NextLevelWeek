@@ -1,1 +1,1 @@
-web: web: knex migrate:latest && knex seed:run && npm start
+web: weknex migrate:latest && knex seed:run && npm start
