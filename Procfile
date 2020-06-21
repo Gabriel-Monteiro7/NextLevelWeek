@@ -1,2 +1,1 @@
-web: npm run knex:migrate && npm run knex:seed && npm start
-roolback: knex migrate:rollback
+web: web: knex migrate:latest && knex seed:run && npm start
